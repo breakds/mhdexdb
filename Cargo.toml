@@ -1,0 +1,11 @@
+[package]
+name = "mhdexdb"
+version = "0.1.0"
+authors = ["Break Yang <breakds@gmail.com>"]
+
+[lib]
+name = "dexdb"
+path = "src/lib.rs"
+
+[dependencies]
+rusqlite = "0.x"
