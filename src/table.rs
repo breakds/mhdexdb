@@ -1,15 +1,30 @@
-trait TableRow {
-    fn id(&self) -> i32;
-    fn dex_id(&self) -> i32;
-    fn name(&self) -> String;
+extern crate rusqlite;
+
+pub trait DexSqlite {
+    fn statement() -> &'static str;
+    fn new(&rusqlite::Row) -> Self;
 }
 
-trait RowIndexer {
-    
-}
+// trait DexTableRow {
+//     fn id(&self) -> i32;
+//     fn dex_id(&self) -> i32;
+//     fn name(&self) -> String;
+// }
 
-struct Table<Row> {
+#[derive(Debug)]
+pub struct Table<Row> {
     rows: Vec<Row>,
+}
+
+impl<Row: DexSqlite> Table<Row> {
+    pub fn new(conn: &rusqlite::Connection) -> Table<Row> {
+        let mut statement = conn.prepare(Row::statement()).unwrap();
+        let rows_iter = statement.query_map(&[], |row| Row::new(row)).unwrap();
+        let rows: Vec<Row> = rows_iter.filter_map(|item| item.ok()).collect();
+        Table {
+            rows: rows,
+        }
+    }
 }
 
 #[derive(Debug)]
