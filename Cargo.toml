@@ -9,3 +9,5 @@ path = "src/lib.rs"
 
 [dependencies]
 rusqlite = "0.x"
+lazy_static = "0.x"
+rustc-serialize = "0.x"

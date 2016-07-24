@@ -1,23 +1,14 @@
 extern crate rusqlite;
 
-pub trait DexSqlite {
-    fn statement() -> &'static str;
-    fn new(&rusqlite::Row) -> Self;
-}
-
-pub trait IndexedRow {
-    fn id(&self) -> i32;
-    fn dex_id(&self) -> i32;
-    fn to_dex(i32) -> i32;
-    fn to_id(i32) -> i32;
-}
+use std::slice;
+use data::base::{DexSqlite, Indexed};
 
 #[derive(Debug)]
 pub struct Table<Row> {
     rows: Vec<Row>,
 }
 
-impl<Row: DexSqlite + IndexedRow> Table<Row> {
+impl<Row: DexSqlite + Indexed> Table<Row> {
     pub fn new(conn: &rusqlite::Connection) -> Table<Row> {
         let mut statement = conn.prepare(Row::statement()).unwrap();
         let rows_iter = statement.query_map(&[], |row| Row::new(row)).unwrap();
@@ -34,16 +25,14 @@ impl<Row: DexSqlite + IndexedRow> Table<Row> {
             rows: rows,
         }
     }
+
+    pub fn iter(&self) -> slice::Iter<Row> {
+        self.rows.iter()
+    }
 }
 
 impl<Row> Table<Row> {
     pub fn get(&self, id: i32) -> &Row {
         &self.rows[id as usize]
     }
-}
-
-#[derive(Debug)]
-pub enum Ref {
-    Id(i32),
-    DexId(i32),
 }

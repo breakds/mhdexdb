@@ -1,4 +1,4 @@
-use table;
+use data::base::Ref;
 
 #[derive(Debug)]
 enum QuestSignificant {
@@ -33,7 +33,7 @@ pub struct Quest {
     significant: QuestSignificant,
     category: QuestCategory,
     quest_type: QuestType,
-    location: table::Ref,
+    location: Ref,
     fee: i32,
     time: i32,
 }
@@ -47,7 +47,7 @@ impl Quest {
             significant: QuestSignificant::Normal,
             category: QuestCategory::Village(3),
             quest_type: QuestType::Hunting,
-            location: table::Ref::Id(12),
+            location: Ref::Id(12),
             fee: 10,
             time: 50,
         }

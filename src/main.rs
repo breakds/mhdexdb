@@ -2,12 +2,11 @@ extern crate dexdb;
 extern crate rusqlite;
 
 
-use dexdb::table::DexSqlite;
-use dexdb::table::Table;
+use dexdb::data::base::DexSqlite;
+use dexdb::data::table::Table;
 use dexdb::data::weapon::Weapon;
 
 use rusqlite::Connection;
-use rusqlite::Statement;
 
 fn main() {
     let conn = Connection::open_with_flags("/home/breakds/dataset/mhx/mhx.db",
@@ -19,5 +18,5 @@ fn main() {
 
     let weapons: Table<Weapon> = Table::<Weapon>::new(&conn);
 
-    println!("{:?}", weapons.get(2));
+    println!("{}", weapons.iter().find(|&weapon| weapon.affinity > 0).unwrap());
 }
