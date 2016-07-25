@@ -14,6 +14,14 @@ pub struct Table<Row> {
     rows: Vec<Row>,
 }
 
+impl<Row> Table<Row> {
+    pub fn empty() -> Table<Row> {
+        Table {
+            rows: vec![],
+        }
+    }
+}
+
 impl<Row: DexSqlite + Indexed> Table<Row> {
     pub fn new(conn: &rusqlite::Connection) -> Table<Row> {
         let mut statement = conn.prepare(Row::statement()).unwrap();

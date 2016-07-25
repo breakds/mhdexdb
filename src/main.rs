@@ -4,6 +4,7 @@ extern crate rustc_serialize;
 
 use dexdb::data::base::{DexSqlite, LangText};
 use dexdb::data::table::Table;
+use dexdb::data::dataset::DataSet;
 use dexdb::data::weapon::Weapon;
 use dexdb::data::weapon::WeaponColumn;
 
@@ -28,4 +29,7 @@ fn main() {
     let weapon_columns: Table<WeaponColumn> = Table::<WeaponColumn>::from_json(
         "/home/breakds/pf/projects/mhdexdb/data/metadata/weapon_columns.json");
     println!("{}", weapon_columns);
+
+    let dataset: DataSet = DataSet::new();
+    println!("{}", dataset.weapon_columns);
 }
