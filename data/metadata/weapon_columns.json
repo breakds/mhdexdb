@@ -1,0 +1,20 @@
+[
+    {
+        "name": "name",
+        "label": {
+            "ENG": "name",
+            "CHS": "武器名",
+            "JAP": "武器名"
+        }
+    },
+    {
+        "name": "slots",
+        "label": {
+            "ENG": "slots",
+            "CHS": "孔",
+            "JAP": "スロット"
+        }
+    }
+]
+    
+    

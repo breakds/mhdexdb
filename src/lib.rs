@@ -1,3 +1,5 @@
+extern crate rustc_serialize;
+
 // Data Types
 pub mod data;
 

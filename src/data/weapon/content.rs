@@ -2,12 +2,8 @@ extern crate rusqlite;
 
 use std::fmt;
 
-use data::base::Language;
-use data::base::LangText;
-use data::base::ByLanguage;
-
-use data::base::DexSqlite;
-use data::base::Indexed;
+use data::base::{Language, LangText, ByLanguage};
+use data::base::{DexSqlite, Indexed};
 
 // pub enum WeaponProperty {
 //     Name = 0,
@@ -34,11 +30,6 @@ use data::base::Indexed;
 
 // pub struct WeaponType {
 //     id: i32,
-//     pub name: LangText,
-// }
-
-// pub struct WeaponColumn {
-//     pub id: 
 //     pub name: LangText,
 // }
 
@@ -77,9 +68,14 @@ impl DexSqlite for Weapon {
     }
 
     fn new(row: &rusqlite::Row) -> Weapon {
+        let english: String = row.get(1);
+        let chinese_simplified: String = row.get(2);
+        let japanese: String = row.get(3);
         Weapon {
             id: Weapon::to_id(row.get(0)),
-            name: LangText::new(row.get(1), row.get(2), row.get(3)),
+            name: LangText::new(&english,
+                                &chinese_simplified,
+                                &japanese),
             rare: row.get(4),
             attack: row.get(5),
             affinity: {

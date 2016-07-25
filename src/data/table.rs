@@ -1,7 +1,13 @@
 extern crate rusqlite;
 
+use std::fmt;
+use std::io;
+use std::io::prelude::*;
 use std::slice;
+use std::fs::File;
 use data::base::{DexSqlite, Indexed};
+use rustc_serialize::{Decodable};
+use rustc_serialize::json;
 
 #[derive(Debug)]
 pub struct Table<Row> {
@@ -26,13 +32,41 @@ impl<Row: DexSqlite + Indexed> Table<Row> {
         }
     }
 
+}
+
+impl<Row: Indexed> Table<Row> {
     pub fn iter(&self) -> slice::Iter<Row> {
         self.rows.iter()
+    }
+}
+
+impl <Row: Decodable> Table<Row> {
+    pub fn from_json(path: &str) -> Table<Row> {
+        let mut file = File::open(path).unwrap();
+        let mut text = String::new();
+        file.read_to_string(&mut text);
+
+        println!("{}", &text);
+
+        let rows: Vec<Row> = json::decode(&text).unwrap();
+
+        Table {
+            rows: rows,
+        }
     }
 }
 
 impl<Row> Table<Row> {
     pub fn get(&self, id: i32) -> &Row {
         &self.rows[id as usize]
+    }
+}
+
+impl<Row: fmt::Display> fmt::Display for Table<Row> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for row in &self.rows {
+            writeln!(f, "{}", &row);
+        }
+        writeln!(f, "---")
     }
 }
