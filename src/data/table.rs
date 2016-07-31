@@ -6,7 +6,7 @@ use std::io::prelude::*;
 use std::slice;
 use std::fs::File;
 use data::base::{DexSqlite, Indexed};
-use rustc_serialize::{Decodable};
+use rustc_serialize::Decodable;
 use rustc_serialize::json;
 
 #[derive(Debug)]
@@ -39,7 +39,6 @@ impl<Row: DexSqlite + Indexed> Table<Row> {
             rows: rows,
         }
     }
-
 }
 
 impl<Row: Indexed> Table<Row> {
@@ -53,9 +52,7 @@ impl <Row: Decodable> Table<Row> {
         let mut file = File::open(path).unwrap();
         let mut text = String::new();
         file.read_to_string(&mut text);
-
-        println!("{}", &text);
-
+        
         let rows: Vec<Row> = json::decode(&text).unwrap();
 
         Table {

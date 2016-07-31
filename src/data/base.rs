@@ -10,6 +10,13 @@ pub trait DexSqlite {
     fn new(&rusqlite::Row) -> Self;
 }
 
+pub trait DecodableWithContext {
+    type Raw: Decodable;
+    type Context;
+
+    fn convert(raw: &raw, context: &Context);
+}
+
 pub trait Indexed {
     fn id(&self) -> i32;
     fn dex_id(&self) -> i32;

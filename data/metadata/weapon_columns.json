@@ -1,6 +1,7 @@
 [
     {
         "name": "name",
+        "numeric": false,
         "label": {
             "ENG": "name",
             "CHS": "武器名",
@@ -9,12 +10,137 @@
     },
     {
         "name": "slots",
+        "numeric": false,
         "label": {
             "ENG": "slots",
             "CHS": "孔",
             "JAP": "スロット"
         }
+    },
+    {
+        "name": "affinity",
+        "numeric": false,
+        "label": {
+            "CHS": "会心",
+            "JAP": "会心",
+            "ENG": "Affinity"
+        }
+    },
+    {
+        "name": "special",
+        "numeric": false,
+        "label": {
+            "CHS": "特殊",
+            "JAP": "特別",
+            "ENG": "Special"
+        }
+    },
+    {
+        "name": "sharpness",
+        "numeric": false,
+        "label": {
+            "CHS": "斩味",
+            "JAP": "斬れ味",
+            "ENG": "Sharpness"
+        }
+    },
+    {
+        "name": "gunlance-shot-type",
+        "numeric": false,
+        "label": {
+            "CHS": "炮击",
+            "JAP": "砲撃",
+            "ENG": "Gun"
+        }
+    },
+    {
+        "name": "charge-blade-phial",
+        "numeric": false,
+        "label": {
+            "CHS": "瓶",
+            "JAP": "ビン",
+            "ENG": "Phial"
+        }
+    },
+    {
+        "name": "switch-axe-phial",
+        "numeric": false,
+        "label": {
+            "CHS": "瓶",
+            "JAP": "ビン",
+            "ENG": "Phial"
+        }
+    },
+    {
+        "name": "bow-arc",
+        "numeric": false,
+        "label": {
+            "CHS": "曲射",
+            "JAP": "曲射",
+            "ENG": "Arc"
+        }
+    },
+    {
+        "name": "bow-shot",
+        "numeric": false,
+        "label": {
+            "CHS": "蓄力",
+            "JAP": "溜め",
+            "ENG": "Charge"
+        }
+    },
+    {
+        "name": "notes",
+        "numeric": false,
+        "label": {
+            "CHS": "音符",
+            "JAP": "音色",
+            "ENG": "Notes"
+        }
+    },
+    {
+        "name": "reload",
+        "numeric": false,
+        "label": {
+            "CHS": "装弹",
+            "JAP": "リロード",
+            "ENG": "Reload"
+        }
+    },
+    {
+        "name": "steadiness",
+        "numeric": false,
+        "label": {
+            "CHS": "摇晃",
+            "JAP": "ブレ",
+            "ENG": "Shake"
+        }
+    },
+    {
+        "name": "recoil",
+        "numeric": false,
+        "label": {
+            "CHS": "后坐力",
+            "JAP": "反動",
+            "ENG": "Recoil"
+        }
+    },
+    {
+        "name": "rapid",
+        "numeric": false,
+        "label": {
+            "CHS": "速射",
+            "JAP": "速射",
+            "ENG": "Rapid"
+        }
+    },
+    {
+        "name": "attack",
+        "numeric": true,
+        "label": {
+            "CHS": "攻击力",
+            "JAP": "攻撃",
+            "ENG": "Attack"
+        }
     }
 ]
-    
-    

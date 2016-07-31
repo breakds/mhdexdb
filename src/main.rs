@@ -30,6 +30,6 @@ fn main() {
         "/home/breakds/pf/projects/mhdexdb/data/metadata/weapon_columns.json");
     println!("{}", weapon_columns);
 
-    let dataset: DataSet = DataSet::new();
+    let dataset: DataSet = DataSet::new("/home/breakds/pf/projects/mhdexdb/data/metadata");
     println!("{}", dataset.weapon_columns);
 }
