@@ -2,8 +2,6 @@ use data::weapon::{WeaponColumn, WeaponType, Weapon};
 
 use data::table::Table;
 
-use rustc_serialize::Decodable;
-
 pub struct DataSet {
     // Metadata
     pub weapon_columns: Table<WeaponColumn>,

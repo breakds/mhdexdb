@@ -106,11 +106,11 @@ impl Indexed for Weapon {
 
 impl fmt::Display for Weapon {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "Weapon: {} {{", self.name.get(Language::ENG));
-        writeln!(f, "  ID: {}", self.id);
-        writeln!(f, "  Rare: {}", self.rare);
-        writeln!(f, "  Attack: {}", self.attack);
-        writeln!(f, "  Affinity: {}", self.affinity);
+        try!(writeln!(f, "Weapon: {} {{", self.name.get(Language::ENG)));
+        try!(writeln!(f, "  ID: {}", self.id));
+        try!(writeln!(f, "  Rare: {}", self.rare));
+        try!(writeln!(f, "  Attack: {}", self.attack));
+        try!(writeln!(f, "  Affinity: {}", self.affinity));
         writeln!(f, "}}")
     }
 }

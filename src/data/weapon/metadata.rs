@@ -2,7 +2,7 @@ use std::fmt;
 
 use data::base::{Language, LangText, ByLanguage, DecodableWithContext};
 use data::table::Table;
-use rustc_serialize::{Decodable, Decoder};
+use rustc_serialize::{Decoder};
 
 /* Weapon Column */
 
@@ -15,9 +15,9 @@ pub struct WeaponColumn {
 
 impl fmt::Display for WeaponColumn {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "WeaponColumn - {} {{", self.name);
-        writeln!(f, "  label: {}", self.label);
-        writeln!(f, "  numeric: {}", self.numeric);
+        try!(writeln!(f, "WeaponColumn - {} {{", self.name));
+        try!(writeln!(f, "  label: {}", self.label));
+        try!(writeln!(f, "  numeric: {}", self.numeric));
         writeln!(f, "}}")
     }
 }
@@ -51,13 +51,13 @@ impl DecodableWithContext for WeaponType {
 
 impl fmt::Display for WeaponType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "WeaponType - {} {{", self.name.get(Language::ENG));
-        writeln!(f, "  name: {}", self.name);
-        write!(f, "  columns:");
+        try!(writeln!(f, "WeaponType - {} {{", self.name.get(Language::ENG)));
+        try!(writeln!(f, "  name: {}", self.name));
+        try!(write!(f, "  columns:"));
         for column in &self.columns {
-            write!(f, " {}", column.name);
+            try!(write!(f, " {}", column.name));
         }
-        writeln!(f, "");
+        try!(writeln!(f, ""));
         writeln!(f, "}}")
     }
 }

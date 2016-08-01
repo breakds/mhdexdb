@@ -1,7 +1,6 @@
 extern crate rusqlite;
 
 use std::fmt;
-use std::io;
 use std::io::prelude::*;
 use std::slice;
 use std::fs::File;
@@ -86,7 +85,7 @@ impl<Row> Table<Row> {
 impl<Row: fmt::Display> fmt::Display for Table<Row> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for row in &self.rows {
-            writeln!(f, "{}", &row);
+            writeln!(f, "{}", &row).unwrap();
         }
         writeln!(f, "---")
     }
