@@ -1,0 +1,10 @@
+[
+    {
+        "name": {
+            "ENG": "Great Sword",
+            "CHS": "大剑",
+            "JAP": "大剣"
+        }, 
+        "columns": ["name"]
+    }
+]

@@ -5,8 +5,7 @@ extern crate rustc_serialize;
 use dexdb::data::base::{DexSqlite, LangText};
 use dexdb::data::table::Table;
 use dexdb::data::dataset::DataSet;
-use dexdb::data::weapon::Weapon;
-use dexdb::data::weapon::WeaponColumn;
+use dexdb::data::weapon::{WeaponColumn, WeaponType, Weapon};
 
 use rusqlite::Connection;
 
@@ -26,10 +25,6 @@ fn main() {
 
     // println!("{}", WeaponColumn::new(&Json::from_str("{\"name\": \"haha\", \"label\": {\"ENG\": \"haha\", \"JAP\": \"jap\", \"CHS\": \"hehe\"}}").unwrap()));
 
-    let weapon_columns: Table<WeaponColumn> = Table::<WeaponColumn>::from_json(
-        "/home/breakds/pf/projects/mhdexdb/data/metadata/weapon_columns.json");
-    println!("{}", weapon_columns);
-
     let dataset: DataSet = DataSet::new("/home/breakds/pf/projects/mhdexdb/data/metadata");
-    println!("{}", dataset.weapon_columns);
+    println!("{}", dataset.weapon_types);
 }

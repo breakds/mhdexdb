@@ -5,6 +5,7 @@ pub use self::content::Weapon;
 
 mod metadata;
 pub use self::metadata::WeaponColumn;
+pub use self::metadata::WeaponType;
 
 
 

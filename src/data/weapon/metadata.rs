@@ -15,7 +15,7 @@ pub struct WeaponColumn {
 
 impl fmt::Display for WeaponColumn {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "WeaponColumn: {} {{", self.name);
+        writeln!(f, "WeaponColumn - {} {{", self.name);
         writeln!(f, "  label: {}", self.label);
         writeln!(f, "  numeric: {}", self.numeric);
         writeln!(f, "}}")
@@ -23,6 +23,7 @@ impl fmt::Display for WeaponColumn {
 }
 
 /* Weapon Type */
+
 #[derive(RustcDecodable)]
 pub struct RawWeaponType {
     pub name: LangText,
@@ -42,12 +43,22 @@ impl DecodableWithContext for WeaponType {
         WeaponType {
             name: raw.name.clone(),
             columns: raw.columns.iter().map(|column_name| -> WeaponColumn {
-                let target_column: &WeaponColumn = context.iter().find(|x| {
-                    x.name == *column_name
-                }).unwrap();
-                target_column.clone()
-            }).collect()
+                context.iter().find(|x| x.name == *column_name).unwrap().clone()
+            }).collect::<Vec<WeaponColumn>>()
         }
+    }
+}
+
+impl fmt::Display for WeaponType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        writeln!(f, "WeaponType - {} {{", self.name.get(Language::ENG));
+        writeln!(f, "  name: {}", self.name);
+        write!(f, "  columns:");
+        for column in &self.columns {
+            write!(f, " {}", column.name);
+        }
+        writeln!(f, "");
+        writeln!(f, "}}")
     }
 }
 

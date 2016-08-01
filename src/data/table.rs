@@ -5,7 +5,7 @@ use std::io;
 use std::io::prelude::*;
 use std::slice;
 use std::fs::File;
-use data::base::{DexSqlite, Indexed};
+use data::base::{DexSqlite, Indexed, DecodableWithContext};
 use rustc_serialize::Decodable;
 use rustc_serialize::json;
 
@@ -41,16 +41,34 @@ impl<Row: DexSqlite + Indexed> Table<Row> {
     }
 }
 
-impl <Row: Decodable> Table<Row> {
+impl<Row: Decodable> Table<Row> {
     pub fn from_json(path: &str) -> Table<Row> {
         let mut file = File::open(path).unwrap();
         let mut text = String::new();
-        file.read_to_string(&mut text);
+        file.read_to_string(&mut text).unwrap();
         
-        let rows: Vec<Row> = json::decode(&text).unwrap();
-
         Table {
-            rows: rows,
+            rows: json::decode(&text).unwrap()
+        }
+    }
+}
+
+impl<Row: DecodableWithContext> Table<Row> {
+    pub fn from_json_context(
+        path: &str, 
+        context: &<Row as DecodableWithContext>::Context) -> Table<Row> {
+        
+        let mut file = File::open(path).unwrap();
+        let mut text = String::new();
+        file.read_to_string(&mut text).unwrap();
+        
+        let raw_rows: Vec<<Row as DecodableWithContext>::Raw> = 
+            json::decode(&text).unwrap();
+        
+        Table {
+            rows: raw_rows.iter().map(|raw| -> Row {
+                Row::convert(raw, context)
+            }).collect::<Vec<Row>>()
         }
     }
 }
