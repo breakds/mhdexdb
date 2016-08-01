@@ -4,7 +4,111 @@
             "ENG": "Great Sword",
             "CHS": "大剑",
             "JAP": "大剣"
-        }, 
-        "columns": ["name"]
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Long Sword",
+            "CHS": "太刀",
+            "JAP": "太刀"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Sowrd/Shield",
+            "CHS": "片手剑",
+            "JAP": "片手剣"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Dual Blades",
+            "CHS": "双剑",
+            "JAP": "双剣"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Hammer",
+            "CHS": "大锤",
+            "JAP": "ハンマー"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Hunting Horn",
+            "CHS": "狩猎笛",
+            "JAP": "狩猟笛"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "notes", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Lance",
+            "CHS": "长枪",
+            "JAP": "ランス"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Gunlance",
+            "CHS": "铳枪",
+            "JAP": "ガンランス"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "gunlance-shot-type", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Switch Axe",
+            "CHS": "斩击斧",
+            "JAP": "スラッシュアックス"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "switch-axe-phial", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Charge Blade",
+            "CHS": "盾斧",
+            "JAP": "チャージアックス"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "charge-blade-phial", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Insect Glaive",
+            "CHS": "操虫棍",
+            "JAP": "操虫棍"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "sharpness"]
+    },
+    {
+        "name": {
+            "ENG": "Light Bowgun",
+            "CHS": "轻弩",
+            "JAP": "ライトボウガン"
+        },
+        "columns": ["name", "slots", "attack", "rapid", "affinity", "steadiness", "recoil"]
+    },
+    {
+        "name": {
+            "ENG": "Heavy Bowgun",
+            "CHS": "重弩",
+            "JAP": "ヘビィボウガン"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "reload", "steadiness", "recoil"]
+    },
+    {
+        "name": {
+            "ENG": "Bow",
+            "CHS": "弓",
+            "JAP": "弓"
+        },
+        "columns": ["name", "slots", "attack", "affinity", "special", "bow-arc", "bow-shot"]
     }
 ]
