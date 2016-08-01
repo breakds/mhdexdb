@@ -1,11 +1,12 @@
 use std::fmt;
 
-use data::base::{Language, LangText, ByLanguage};
+use data::base::{Language, LangText, ByLanguage, DecodableWithContext};
+use data::table::Table;
 use rustc_serialize::{Decodable, Decoder};
 
 /* Weapon Column */
 
-#[derive(RustcDecodable)]
+#[derive(RustcDecodable, Clone)]
 pub struct WeaponColumn {
     pub name: String,
     pub numeric: bool,
@@ -37,11 +38,15 @@ impl DecodableWithContext for WeaponType {
     type Raw = RawWeaponType;
     type Context = Table<WeaponColumn>;
     
-    fn convert(raw: &RawWeaponType, context: &Table<WeaponColumn>) {
-        let mut columns = 
+    fn convert(raw: &RawWeaponType, context: &Table<WeaponColumn>) -> WeaponType {
         WeaponType {
-            name: raw.name,
-            columnes: context.
+            name: raw.name.clone(),
+            columns: raw.columns.iter().map(|column_name| -> WeaponColumn {
+                let target_column: &WeaponColumn = context.iter().find(|x| {
+                    x.name == *column_name
+                }).unwrap();
+                target_column.clone()
+            }).collect()
         }
     }
 }

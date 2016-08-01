@@ -14,7 +14,7 @@ pub trait DecodableWithContext {
     type Raw: Decodable;
     type Context;
 
-    fn convert(raw: &raw, context: &Context);
+    fn convert(raw: &Self::Raw, context: &Self::Context) -> Self;
 }
 
 pub trait Indexed {
@@ -68,6 +68,14 @@ impl LangText {
 impl ByLanguage<String> for LangText {
     fn get(&self, language: Language) -> &String {
         &self.storage[language as usize]
+    }
+}
+
+impl Clone for LangText {
+    fn clone(&self) -> LangText {
+        LangText::new(self.get(Language::ENG),
+                      self.get(Language::CHS),
+                      self.get(Language::JAP))
     }
 }
 
