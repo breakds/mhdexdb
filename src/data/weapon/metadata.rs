@@ -4,6 +4,14 @@ use data::base::{Language, LangText, ByLanguage, DecodableWithContext};
 use data::table::Table;
 use rustc_serialize::{Decoder};
 
+/* Sharpness Color */
+
+#[derive(RustcDecodable)]
+pub struct SharpnessColor {
+    pub id: i32,
+    pub color: String,
+}
+
 /* Weapon Column */
 
 #[derive(RustcDecodable, Clone)]
@@ -61,8 +69,3 @@ impl fmt::Display for WeaponType {
         writeln!(f, "}}")
     }
 }
-
-
-
-
-

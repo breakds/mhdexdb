@@ -1,9 +1,10 @@
-use data::weapon::{WeaponColumn, WeaponType, Weapon};
+use data::weapon::{SharpnessColor, WeaponColumn, WeaponType, Weapon};
 
 use data::table::Table;
 
 pub struct DataSet {
     // Metadata
+    pub sharpness_colors: Table<SharpnessColor>,
     pub weapon_columns: Table<WeaponColumn>,
     pub weapon_types: Table<WeaponType>,
 
@@ -14,6 +15,9 @@ pub struct DataSet {
 impl DataSet {
     pub fn new(metadata_directory: &str) -> DataSet {
 
+        let sharpness_colors = Table::<SharpnessColor>::from_json(
+            &DataSet::metadata_path(metadata_directory, "sharpness_colors.json"));
+
         let weapon_columns = Table::<WeaponColumn>::from_json(
             &DataSet::metadata_path(metadata_directory, "weapon_columns.json"));
 
@@ -22,6 +26,7 @@ impl DataSet {
             &weapon_columns);
 
         DataSet {
+            sharpness_colors: sharpness_colors,
             weapon_columns: weapon_columns,
             weapon_types: weapon_types,
             weapons: Table::<Weapon>::empty(),
