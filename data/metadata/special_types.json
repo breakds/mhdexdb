@@ -1,0 +1,74 @@
+[
+    {
+        "name": {
+            "ENG": "Fire",
+            "CHS": "火",
+            "JAP": "火"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Wat",
+            "CHS": "水",
+            "JAP": "水"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Thun",
+            "CHS": "雷",
+            "JAP": "雷"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Ice",
+            "CHS": "冰",
+            "JAP": "氷"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Dra",
+            "CHS": "龙",
+            "JAP": "龍"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Pois",
+            "CHS": "毒",
+            "JAP": "毒"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Para",
+            "CHS": "麻",
+            "JAP": "麻"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Sleep",
+            "CHS": "眠",
+            "JAP": "眠"
+        },
+        "color": "#000000"
+    },
+    {
+        "name": {
+            "ENG": "Blast",
+            "CHS": "爆破",
+            "JAP": "爆破"
+        },
+        "color": "#000000"
+    }
+]

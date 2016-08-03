@@ -69,3 +69,19 @@ impl fmt::Display for WeaponType {
         writeln!(f, "}}")
     }
 }
+
+/* Special Types */
+
+#[derive(RustcDecodable)]
+pub struct SpecialType {
+    pub name: LangText,
+    pub color: String,
+}
+
+/* Charge Blade and Switch Axe Phials */
+
+#[derive(RustcDecodable)]
+pub struct WeaponPhial {
+    pub id: i32,
+    pub name: LangText,
+}

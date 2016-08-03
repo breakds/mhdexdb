@@ -7,6 +7,8 @@ mod metadata;
 pub use self::metadata::SharpnessColor;
 pub use self::metadata::WeaponColumn;
 pub use self::metadata::WeaponType;
+pub use self::metadata::SpecialType;
+pub use self::metadata::WeaponPhial;
 
 
 

@@ -1,0 +1,52 @@
+[
+    {
+        "name": {
+            "ENG": "Power",
+            "CHS": "强击瓶",
+            "JAP": "強撃ビン"
+        },
+        "id": 0
+    },
+    
+    {
+        "name": {
+            "ENG": "Para" ,
+            "CHS": "麻痹瓶",
+            "JAP": "麻痺ビン"
+        },
+        "id": 1
+    },
+    
+    {
+        "name": {
+            "ENG": "Poison",
+            "CHS": "毒瓶",
+            "JAP": "毒ビン"
+        },
+        "id": 2
+    },
+    {
+        "name": {
+            "ENG": "Dragon",
+            "CHS": "灭龙瓶",
+            "JAP": "滅龍ビン"
+        },
+        "id": 3
+    },
+    {
+        "name": {
+            "ENG": "Element",
+            "CHS": "强属性瓶",
+            "JAP": "強属性ビン"
+        },
+        "id": 4
+    },
+    {
+        "name": {
+            "ENG": "Exhaust",
+            "CHS": "减气瓶",
+            "JAP": "減気ビン"
+        },
+        "id": 5
+    }
+]
