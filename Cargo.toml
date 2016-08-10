@@ -10,4 +10,9 @@ path = "src/lib.rs"
 [dependencies]
 rusqlite = "0.x"
 lazy_static = "0.x"
+
+# For parsing Json
 rustc-serialize = "0.x"
+
+# For Server and Async I/O
+mio = "0.5"

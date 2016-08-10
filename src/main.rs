@@ -1,4 +1,5 @@
 extern crate dexdb;
+extern crate mio;
 extern crate rusqlite;
 extern crate rustc_serialize;
 
@@ -6,10 +7,13 @@ use dexdb::data::base::{DexSqlite, LangText};
 use dexdb::data::table::Table;
 use dexdb::data::dataset::DataSet;
 use dexdb::data::weapon::{WeaponColumn, WeaponType, Weapon};
+use dexdb::server::DexDataServer;
 
 use rusqlite::Connection;
 
 use rustc_serialize::json;
+
+use mio::EventLoop;
 
 fn main() {
     let conn = Connection::open_with_flags("/home/breakds/dataset/mhx/mhx.db",
@@ -26,5 +30,18 @@ fn main() {
     // println!("{}", WeaponColumn::new(&Json::from_str("{\"name\": \"haha\", \"label\": {\"ENG\": \"haha\", \"JAP\": \"jap\", \"CHS\": \"hehe\"}}").unwrap()));
 
     let dataset: DataSet = DataSet::new("/home/breakds/pf/projects/mhdexdb/data/metadata");
-    println!("{}", dataset.weapon_types);
+    println!("{:?}", dataset.switch_axe_phials);
+
+
+    // -------------------- Setting up the server. --------------------
+    let mut event_loop = EventLoop::new().expect(
+        "Failed to create the event loop.");
+
+    let mut server = DexDataServer::new_simple("127.0.0.1:12345");
+
+    server.register(&mut event_loop).unwrap();
+
+    event_loop.run(&mut server).expect(
+        "Failed to run the initialize the event loop.");
+
 }

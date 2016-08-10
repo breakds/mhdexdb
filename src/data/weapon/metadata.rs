@@ -80,7 +80,7 @@ pub struct SpecialType {
 
 /* Charge Blade and Switch Axe Phials */
 
-#[derive(RustcDecodable)]
+#[derive(RustcDecodable, Debug)]
 pub struct WeaponPhial {
     pub id: i32,
     pub name: LangText,

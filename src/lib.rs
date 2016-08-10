@@ -1,7 +1,11 @@
+extern crate mio;
 extern crate rustc_serialize;
 
 // Data Types
 pub mod data;
+
+// Server
+pub mod server;
 
 // Unit Tests
 mod tests {
