@@ -1,8 +1,10 @@
 use std::io;
 
-use mio::{EventLoop, EventSet, Handler, PollOpt, Token, TryRead};
+use mio::{EventLoop, EventSet, Handler, PollOpt, Token, TryRead, TryWrite};
 use mio::tcp::{TcpListener, TcpStream};
 use mio::util::Slab;
+
+use server::DexDataWorker;
 
 const SERVER_TOKEN: Token = Token(1);
 const DEFAULT_TRANSACTION_POOL_SIZE: usize = 1024;
@@ -12,7 +14,7 @@ pub struct DexDataServer {
 
     // Slab<T> is a map between token and T, where token is generated
     // from a token pool managed by a free list.
-    pool: Slab<TcpStream>,
+    pool: Slab<DexDataWorker>,
 }
 
 impl DexDataServer {
@@ -58,54 +60,51 @@ impl Handler for DexDataServer {
         // are interested in occurs.
         //
         // The argurment token indicates which socket/transaction is
-        // notifying such event.
+         // notifying such event.
         //
         // The argument interest is a bit set indicating the type of
         // the event, such as readable, writable, etc.
 
-        match token {
-            SERVER_TOKEN => {
-                let client_socket = match self.socket.accept() {
-                    Err(e) => {
-                        println!("Server socket accept error: {}", e);
-                        return;
-                    },
-
-                    Ok(None) => unreachable!("Server socket accept returns None"),
-                    Ok(Some((socket, _ /* unused address */))) => socket
-                };
-
-                // We need to get a token to assign to the new
-                // (client) socket. Our slab-based pool can generate
-                // an unused one from the underlying free list.
-                let token = self.pool.insert(client_socket).expect(
-                    "Failed to insert socket to pool. The pool might be full.");
-
-                event_loop.register(&self.pool[token], token, EventSet::readable(),
-                                    PollOpt::edge() | PollOpt::oneshot()).expect(
-                    "Failed to register a new client socket.");
-                println!("Inserting client socket {:?} to {:?}",
-                         self.pool[token], token);
-            },
-            token => {
-                loop {
-                    let client: &mut TcpStream = &mut self.pool[token];
-                    let mut buffer = [0; 2048];
-                    match client.try_read(&mut buffer) {
+        if interest.is_readable() {
+            match token {
+                SERVER_TOKEN => {
+                    let client_socket = match self.socket.accept() {
                         Err(e) => {
-                            println!("Error while reading socket: {:?}", e);
+                            println!("Server socket accept error: {}", e);
+                            return;
                         },
-                        Ok(None) => break, // no more bytes from the socket
-                        Ok(Some(len)) => {
-                            let text = String::from_utf8_lossy(&buffer[0..len]);
-                            println!("Read: {}", text);
-                        }
-                    }
+
+                        Ok(None) => unreachable!("Server socket accept returns None"),
+                        Ok(Some((socket, _ /* unused address */))) => socket
+                    };
+
+                    // We need to get a token to assign to the new
+                    // (client) socket. Our slab-based pool can generate
+                    // an unused one from the underlying free list.
+                    let token = self.pool.insert_with(|token| {
+                        DexDataWorker::new(token, client_socket)
+                    }).expect(
+                        "Failed to insert socket to pool. The pool might be full.");
+
+                    event_loop.register(&self.pool[token].stream, token, EventSet::readable(),
+                                        PollOpt::edge() | PollOpt::oneshot()).expect(
+                        "Failed to register a new client socket.");
+                    
+                    println!("Inserting client socket {:?} to {:?}",
+                             self.pool[token].stream, token);
+                },
+                token => {
+                    let mut client = self.pool.get_mut(token).unwrap();
+                    client.handle_readable(event_loop);
                 }
-                
-                println!("Handled client with token {:?}.", token);
-                self.pool.remove(token).unwrap();
             }
         }
+         
+
+        if interest.is_writable() {
+            let mut worker = self.pool.get_mut(token).unwrap();
+            worker.handle_writable(event_loop);
+        }
+        
     }
 }

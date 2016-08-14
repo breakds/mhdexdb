@@ -1,3 +1,4 @@
+extern crate http_muncher;
 extern crate mio;
 extern crate rustc_serialize;
 

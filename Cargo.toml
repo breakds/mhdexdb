@@ -16,3 +16,4 @@ rustc-serialize = "0.x"
 
 # For Server and Async I/O
 mio = "0.5"
+http-muncher = "0.2.5"
