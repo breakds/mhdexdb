@@ -5,6 +5,8 @@ async function getResponse() {
   try {
     let response = await fetch('http://localhost:12345');
     console.log(response);
+    let result = await response.json();
+    console.log(result);
   } catch (err) {
     console.log(err);
   }

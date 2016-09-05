@@ -1,5 +1,4 @@
 use std::io;
-
 use mio::{EventLoop, EventSet, Handler, PollOpt, Token, TryRead, TryWrite};
 use mio::tcp::{TcpListener, TcpStream};
 use mio::util::Slab;
@@ -60,7 +59,7 @@ impl Handler for DexDataServer {
         // are interested in occurs.
         //
         // The argurment token indicates which socket/transaction is
-         // notifying such event.
+        // notifying such event.
         //
         // The argument interest is a bit set indicating the type of
         // the event, such as readable, writable, etc.
@@ -94,8 +93,15 @@ impl Handler for DexDataServer {
                              self.pool[token].stream, token);
                 },
                 token => {
-                    let mut client = self.pool.get_mut(token).unwrap();
-                    client.handle_readable(event_loop);
+                    {
+                        let mut client = self.pool.get_mut(token).unwrap();
+                        client.handle_readable(event_loop);
+                    }
+                    
+                    if self.pool.get(token).unwrap().is_closed() {
+                        println!("Remove client {:?}.", token);
+                        self.pool.remove(token);
+                    }
                 }
             }
         }

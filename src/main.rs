@@ -24,7 +24,7 @@ fn main() {
     // println!("{}", names[1]);
 
     let weapons: Table<Weapon> = Table::<Weapon>::new(&conn);
-
+ 
     println!("{}", weapons.iter().find(|&weapon| weapon.affinity > 0).unwrap());
 
     // println!("{}", WeaponColumn::new(&Json::from_str("{\"name\": \"haha\", \"label\": {\"ENG\": \"haha\", \"JAP\": \"jap\", \"CHS\": \"hehe\"}}").unwrap()));
@@ -43,5 +43,4 @@ fn main() {
 
     event_loop.run(&mut server).expect(
         "Failed to run the initialize the event loop.");
-
 }
