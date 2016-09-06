@@ -8,15 +8,7 @@ use mio::tcp::{TcpStream, Shutdown};
 use http_muncher::{Parser, ParserHandler};
 
 use server::{create_json_response, TestPayload, DexDataServer};
-
-struct HttpParser;
-impl ParserHandler for HttpParser {
-    fn on_body(&mut self, body: &[u8]) -> bool {
-        // Here we can get the payload of the http request.
-        println!("Received Body: {:?}", body);
-        true
-    }
-}
+use server::rpc::RPCRequest;
 
 enum DexDataWorkerState {
     Running,
@@ -27,8 +19,6 @@ pub struct DexDataWorker {
     pub token: Token,
     pub stream: TcpStream,
     state: DexDataWorkerState,
-    // http_parser keeps the state.
-    http_parser: Parser<HttpParser>,
 }
 
 impl DexDataWorker {
@@ -36,32 +26,19 @@ impl DexDataWorker {
         DexDataWorker {
             token: token,
             stream: stream,
-            http_parser: Parser::request(HttpParser),
             state: DexDataWorkerState::Running,
         }
     }
     
     pub fn handle_readable(&mut self, event_loop: &mut EventLoop<DexDataServer>) {
-        let mut buffer = [0; 2048];
-        loop {
-            match self.stream.try_read(&mut buffer) {
-                Err(e) => {
-                    println!("Error while reading socket stream: {:?}", e);
-                },
-                Ok(None) => break, // no more byte from the socket
-                Ok(Some(0)) => {
-                    self.state = DexDataWorkerState::Closed;
-                    break;
-                },
-                Ok(Some(len)) => {
-                    self.http_parser.parse(&buffer);
-                    println!("HTTP Version: {:?}", self.http_parser.http_version());
-                    let text = String::from_utf8_lossy(&buffer[0..len]);
-                    println!("Read length {} : {}", len, text);
-                }
-                
-            }
+        
+        let request = RPCRequest::from_socket(&mut self.stream).unwrap();
+
+        if request.name == "CloseConnection" {
+            self.state = DexDataWorkerState::Closed;
         }
+        
+        println!("RPC name: {}", request.name);
 
         println!("Handled client with token {:?}.", self.token);
 

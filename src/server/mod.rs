@@ -7,3 +7,5 @@ pub use self::worker::DexDataWorker;
 mod response;
 pub use self::response::TestPayload;
 pub use self::response::create_json_response;
+
+mod rpc;

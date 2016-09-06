@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 
 async function getResponse() {
   try {
-    let response = await fetch('http://localhost:12345');
+    let response = await fetch('http://localhost:12345?x=12');
     console.log(response);
     let result = await response.json();
     console.log(result);
