@@ -15,5 +15,6 @@ lazy_static = "0.x"
 rustc-serialize = "0.x"
 
 # For Server and Async I/O
-mio = "0.5"
+mio = "0.6"
 http-muncher = "0.2.5"
+slab = "0.3"

@@ -1,5 +1,5 @@
 use std::io;
-use mio::TryRead;
+use std::io::Read;
 use mio::tcp::TcpStream;
 use http_muncher::{Parser, ParserHandler};
 
@@ -8,7 +8,13 @@ pub struct RPCRequest {
 }
 
 impl RPCRequest {
-    pub fn from_socket(stream: &mut TcpStream) -> io::Result<RPCRequest> {
+    pub fn new() -> RPCRequest {
+        RPCRequest {
+            name: "".to_string()
+        }
+    }
+    
+    pub fn consume(stream: &mut TcpStream) -> io::Result<RPCRequest> {
 
         let mut request = RPCRequest {
             name: "".to_string()
@@ -25,14 +31,22 @@ impl RPCRequest {
             });
 
             loop {
-                match stream.try_read(&mut buffer) {
-                    Err(e) => return Err(e),
-                    Ok(None) => break,  // no more bytes from the socket
-                    Ok(Some(0)) => {
+                match stream.read(&mut buffer) {
+                    Err(e) => {
+                        // DEBUG
+                        println!("Read: {}", String::from_utf8_lossy(&buffer));
+
+                        println!("Is_final_chunck: {:?}", parser.is_final_chunk());
+                        println!("Error: {:?}", e.kind());
+                        return Err(e)
+                    },
+                    Ok(0) => {
                         close_connection = true;
                         break;
                     },
-                    Ok(Some(len)) => {
+                    Ok(len) => {
+                        // DEBUG
+                        println!("Read {} bytes.", len);
                         parser.parse(&buffer);
                         ()
                     }

@@ -13,8 +13,6 @@ use rusqlite::Connection;
 
 use rustc_serialize::json;
 
-use mio::EventLoop;
-
 fn main() {
     let conn = Connection::open_with_flags("/home/breakds/dataset/mhx/mhx.db",
                                            rusqlite::SQLITE_OPEN_READ_ONLY).unwrap();
@@ -26,21 +24,13 @@ fn main() {
     let weapons: Table<Weapon> = Table::<Weapon>::new(&conn);
  
     println!("{}", weapons.iter().find(|&weapon| weapon.affinity > 0).unwrap());
-
+    
     // println!("{}", WeaponColumn::new(&Json::from_str("{\"name\": \"haha\", \"label\": {\"ENG\": \"haha\", \"JAP\": \"jap\", \"CHS\": \"hehe\"}}").unwrap()));
 
     let dataset: DataSet = DataSet::new("/home/breakds/pf/projects/mhdexdb/data/metadata");
     println!("{:?}", dataset.switch_axe_phials);
 
-
     // -------------------- Setting up the server. --------------------
-    let mut event_loop = EventLoop::new().expect(
-        "Failed to create the event loop.");
-
     let mut server = DexDataServer::new_simple("127.0.0.1:12345");
-
-    server.register(&mut event_loop).unwrap();
-
-    event_loop.run(&mut server).expect(
-        "Failed to run the initialize the event loop.");
+    server.run(1024);
 }
