@@ -26,9 +26,10 @@ impl RPCRequest {
             // TODO(breakds): Use the deicated buffer in Rust.
             let mut buffer = [0; 2048];
 
-            let mut parser = Parser::request(RPCHandler {
+            let mut parser = Parser::request();
+            let mut handler = RPCHandler {
                 request: &mut request
-            });
+            };
 
             loop {
                 match stream.read(&mut buffer) {
@@ -47,7 +48,7 @@ impl RPCRequest {
                     Ok(len) => {
                         // DEBUG
                         println!("Read {} bytes.", len);
-                        parser.parse(&buffer);
+                        parser.parse(&mut handler, &buffer);
                         ()
                     }
                 }
@@ -75,7 +76,7 @@ pub struct RPCHandler<'a> {
 }
 
 impl<'a> ParserHandler for RPCHandler<'a> {
-    fn on_url(&mut self, url_bytes: &[u8]) -> bool {
+    fn on_url(&mut self, parser: &mut Parser, url_bytes: &[u8]) -> bool {
         self.request.name.push_str(&String::from_utf8_lossy(url_bytes));
         true
     }
